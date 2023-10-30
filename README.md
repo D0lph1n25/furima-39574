@@ -13,43 +13,42 @@
 
 ### Association
 - has_many :items
-- has_many :buy_item
-- has_one :order
+- has_many :buy_items
 
 ## itemsテーブル
 
-| Colum                      | Type            | Options                        |
-| -------------------------- | --------------- | ------------------------------ |
-| item_name                  | string          | null: false                    |
-| item_info                  | text            | null: false                    |
-| item_category              | string          | null: false                    |
-| item_sales_status          | string          | null: false                    |
-| item_shipping_fee_status   | integer         | null: false                    |
-| prefecture                 | integer         | null: false                    |
-| item_scheduled_delivery    | string          | null: false                    |  
-| item_price                 | integer         | null: false                    | 
-| user                       | references      | null: false, foreign_key: true |
+| Colum                       | Type            | Options                        |
+| --------------------------- | --------------- | ------------------------------ |
+| item_name                   | string          | null: false                    |
+| item_info                   | text            | null: false                    |
+| item_category_id            | integer         | null: false                    |
+| item_sales_status_id        | integer         | null: false                    |
+| item_shipping_fee_status_id | integer         | null: false                    |
+| prefecture_id               | integer         | null: false                    |
+| item_scheduled_delivery_id  | integer         | null: false                    |  
+| item_price                  | integer         | null: false                    | 
+| user                        | references      | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :user
-- has_many :buy_item
+- has_one :buy_item
 ## ordersテーブル
 
 | Colum           | Type            | Options                        | 
 | --------------- | --------------- | ------------------------------ |
 | postal_code     | string          | null: false                    |
-| prefecture      | integer         | null: false                    |
+| prefecture_id   | integer         | null: false                    |
 | city            | string          | null: false                    |
 | addresses       | string          | null: false                    |
 | building        | string          |                                |
 | phone_number    | string          | null: false                    |
-| user            | references      | null: false, foreign_key: true |
+| buy_item        | references      | null: false, foreign_key: true |
 
 ### Association
-- belongs_to :user
+- belongs_to :buy_item
 
 
-## buy_itemテーブル
+## buy_itemsテーブル
 
 | Colum           | Type            | Options                        |
 | --------------- | --------------- | ------------------------------ |
@@ -59,3 +58,4 @@
 ### Association
 - belongs_to :user
 - belongs_to :item
+- has_one :orders
