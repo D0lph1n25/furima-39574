@@ -78,7 +78,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'パスワードが全角文字を含むと登録できない' do
-        @user.password = "１２３ＡＢＥ"
+        @user.password = "i51565あＥ"
         @user.valid?
         expect(@user.errors.full_messages).to include("Password is invalid")
       end
