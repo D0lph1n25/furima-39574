@@ -6,13 +6,12 @@ RSpec.describe Item, type: :model do
   end
 
   describe '出品商品登録' do
-
     context '出品商品が登録できる時' do
       it '全ての項目が入力されている' do
         expect(@item).to be_valid
       end
     end
-    
+
     context '出品商品が登録できない時' do
       it '画像が添付されていないと登録できない' do
         @item.item_image = nil
@@ -20,12 +19,12 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Item image can't be blank")
       end
       it '商品名が入力されていないと登録できない' do
-        @item.item_name = ""
+        @item.item_name = ''
         @item.valid?
         expect(@item.errors.full_messages).to include("Item name can't be blank")
       end
       it '商品の説明が入力されていないと登録できない' do
-        @item.item_info = ""
+        @item.item_info = ''
         @item.valid?
         expect(@item.errors.full_messages).to include("Item info can't be blank")
       end
@@ -55,25 +54,25 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Item scheduled delivery can't be blank")
       end
       it '価格が空であると登録できない' do
-        @item.item_price = ""
+        @item.item_price = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Item price is not a number")
+        expect(@item.errors.full_messages).to include('Item price is not a number')
       end
       it '価格の数値が299以下であると登録できない' do
         @item.item_price = Faker::Number.between(to: 299)
         @item.valid?
-        expect(@item.errors.full_messages).to include("Item price must be greater than or equal to 300")
+        expect(@item.errors.full_messages).to include('Item price must be greater than or equal to 300')
       end
       it '価格の数値が10000000以上であると登録できない' do
-        @item.item_price = Faker::Number.between(from: 10000000, to: 100000000)
+        @item.item_price = Faker::Number.between(from: 10_000_000, to: 100_000_000)
         @item.valid?
-        expect(@item.errors.full_messages).to include("Item price must be less than or equal to 9999999")
+        expect(@item.errors.full_messages).to include('Item price must be less than or equal to 9999999')
       end
       it '価格の数値が半角数字でないと登録できない' do
-        @item.item_price = "２００００"
+        @item.item_price = '２００００'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Item price is not a number")
-      end 
+        expect(@item.errors.full_messages).to include('Item price is not a number')
+      end
     end
   end
 end

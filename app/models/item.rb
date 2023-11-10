@@ -9,13 +9,14 @@ class Item < ApplicationRecord
 
   has_one_attached :item_image
 
-  validates :item_image ,                    presence: true
+  validates :item_image, presence: true
   validates :item_name,                      presence: true
   validates :item_info,                      presence: true
-  validates :item_category_id,               presence: true, numericality: { other_than: 1 , message: "can't be blank"}
-  validates :item_sales_status_id,           presence: true, numericality: { other_than: 1 , message: "can't be blank"}
-  validates :item_shipping_fee_status_id,    presence: true, numericality: { other_than: 1 , message: "can't be blank"}
-  validates :prefecture_id,                  presence: true, numericality: { other_than: 1 , message: "can't be blank"}
-  validates :item_scheduled_delivery_id,     presence: true, numericality: { other_than: 1 , message: "can't be blank"}
-  validates :item_price,                     presence: true, numericality: {greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999}, format: { with: /\A[0-9]+\z/}      
+  validates :item_category_id,               presence: true, numericality: { other_than: 1, message: "can't be blank" }
+  validates :item_sales_status_id,           presence: true, numericality: { other_than: 1, message: "can't be blank" }
+  validates :item_shipping_fee_status_id,    presence: true, numericality: { other_than: 1, message: "can't be blank" }
+  validates :prefecture_id,                  presence: true, numericality: { other_than: 1, message: "can't be blank" }
+  validates :item_scheduled_delivery_id,     presence: true, numericality: { other_than: 1, message: "can't be blank" }
+  validates :item_price,                     presence: true,
+                                             numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }, format: { with: /\A[0-9]+\z/ }
 end
