@@ -59,7 +59,7 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include('Item price is not a number')
       end
       it '価格の数値が299以下であると登録できない' do
-        @item.item_price = Faker::Number.between(to: 299)
+        @item.item_price = Faker::Number.between(from: 0, to: 299)
         @item.valid?
         expect(@item.errors.full_messages).to include('Item price must be greater than or equal to 300')
       end
@@ -72,6 +72,11 @@ RSpec.describe Item, type: :model do
         @item.item_price = '２００００'
         @item.valid?
         expect(@item.errors.full_messages).to include('Item price is not a number')
+      end
+      it 'userが紐づいていないと登録できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User must exist")
       end
     end
   end
