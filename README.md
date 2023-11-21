@@ -31,8 +31,9 @@
 
 ### Association
 - belongs_to :user
-- has_one :buy_item
-## ordersテーブル
+- has_one :shipping_address
+
+## shipping_addressesテーブル
 
 | Colum           | Type            | Options                        | 
 | --------------- | --------------- | ------------------------------ |
@@ -45,10 +46,10 @@
 | buy_item        | references      | null: false, foreign_key: true |
 
 ### Association
-- belongs_to :buy_item
+- belongs_to :order
 
 
-## buy_itemsテーブル
+## ordersテーブル
 
 | Colum           | Type            | Options                        |
 | --------------- | --------------- | ------------------------------ |
@@ -58,4 +59,4 @@
 ### Association
 - belongs_to :user
 - belongs_to :item
-- has_one :order
+- has_one :shipping_address
