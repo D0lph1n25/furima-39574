@@ -1,13 +1,15 @@
 class OrdersController < ApplicationController
+  before_action :top_page, only: :index
 
   def index
     @item = Item.find(params[:item_id])
-    if user_signed_in? && @item.user_id =! current_user.id
+    if user_signed_in? && @item.order != nil
+      redirect_to root_path
+    elsif user_signed_in? && @item.user_id != current_user.id
       gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
       @order_shipping_address = OrderShippingAddress.new
     elsif user_signed_in? && @item.user_id == current_user.id
       redirect_to root_path
-    
     end
   end
 
@@ -33,11 +35,17 @@ class OrdersController < ApplicationController
 
   def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
-      Payjp::Charge.create(
-        amount: @item.item_price, #商品の値段
-        card: order_params[:token], 
-        currency: 'jpy'
+    Payjp::Charge.create(
+      amount: @item.item_price, #商品の値段
+      card: order_params[:token], 
+      currency: 'jpy'
     )
+  end
+
+  def top_page
+    unless user_signed_in?
+      redirect_to root_path
+    end
   end
 
 end

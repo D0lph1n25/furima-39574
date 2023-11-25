@@ -24,7 +24,6 @@ const pay = () => {
       cvcElement.clear();
       document.getElementById("charge-form").submit();
     });
-    console.log("フォーム送信時にイベント発火")
     e.preventDefault();
   })
 };
