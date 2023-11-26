@@ -16,8 +16,6 @@ RSpec.describe OrderShippingAddress, type: :model do
       @order_shipping_address.building = ""
       expect(@order_shipping_address).to be_valid
     end
-
-
   end
 
   context '登録できないとき' do
@@ -75,11 +73,16 @@ RSpec.describe OrderShippingAddress, type: :model do
       expect(@order_shipping_address.errors.full_messages).to include("User can't be blank")
     end
 
-    it 'itemが紐付いていないと登録できない'
+    it 'itemが紐付いていないと登録できない' do
       @order_shipping_address.item_id = nil
       @order_shipping_address.valid?
       expect(@order_shipping_address.errors.full_messages).to include("Item can't be blank")
     end
-    
+
+    it 'tokenが空では登録できない' do 
+      @order_shipping_address.token = ""
+      @order_shipping_address.valid?
+      expect(@order_shipping_address.errors.full_messages).to include("Token can't be blank")
+    end
   end
 end
