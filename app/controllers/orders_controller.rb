@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
   before_action :top_page, only: :index
+  before_action :item_find, only: [:index, :create]
 
   def index
-    @item = Item.find(params[:item_id])
     case
     when user_signed_in? && @item.order.present?
       redirect_to root_path
@@ -15,7 +15,6 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_shipping_address = OrderShippingAddress.new(order_params)
     if @order_shipping_address.valid?
       pay_item
@@ -48,6 +47,11 @@ class OrdersController < ApplicationController
       redirect_to root_path
     end
   end
+
+  def item_find
+    @item = Item.find(params[:item_id])
+  end
+
 
 end
 

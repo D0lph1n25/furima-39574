@@ -55,8 +55,20 @@ RSpec.describe OrderShippingAddress, type: :model do
       expect(@order_shipping_address.errors.full_messages).to include("Phone number can't be blank")
     end
 
-    it '電話番号が１０桁以上１１桁以内でないと登録できない' do
+    it '電話番号が-を含むと登録できない' do
       @order_shipping_address.phone_number = "090-1234-5678"
+      @order_shipping_address.valid?
+      expect(@order_shipping_address.errors.full_messages).to include("Phone number 10桁以上11桁以内の半角数値で入力してください")
+    end
+
+    it '電話番号が９桁以下の時は登録できない' do
+      @order_shipping_address.phone_number =  Faker::Number.between(from: 0, to: 9)
+      @order_shipping_address.valid?
+      expect(@order_shipping_address.errors.full_messages).to include("Phone number 10桁以上11桁以内の半角数値で入力してください")
+    end
+
+    it '電話番号が１２桁以上の時は登録できない' do
+      @order_shipping_address.phone_number = Faker::Number.between(from: 12)
       @order_shipping_address.valid?
       expect(@order_shipping_address.errors.full_messages).to include("Phone number 10桁以上11桁以内の半角数値で入力してください")
     end
