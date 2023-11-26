@@ -3,12 +3,13 @@ class OrdersController < ApplicationController
 
   def index
     @item = Item.find(params[:item_id])
-    if user_signed_in? && @item.order != nil
+    case
+    when user_signed_in? && @item.order.present?
       redirect_to root_path
-    elsif user_signed_in? && @item.user_id != current_user.id
+    when user_signed_in? && @item.user_id != current_user.id
       gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
       @order_shipping_address = OrderShippingAddress.new
-    elsif user_signed_in? && @item.user_id == current_user.id
+    when user_signed_in? && @item.user_id == current_user.id
       redirect_to root_path
     end
   end
@@ -22,7 +23,7 @@ class OrdersController < ApplicationController
       redirect_to root_path
     else
       gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-      render :index, status: :unprocessable_entity
+      render 'index', status: :unprocessable_entity
     end
   end
 
