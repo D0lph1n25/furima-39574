@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :top_page, only: :index
+  before_action :move_session, only: :index
   before_action :item_find, only: [:index, :create]
 
   def index
@@ -42,9 +42,9 @@ class OrdersController < ApplicationController
     )
   end
 
-  def top_page
+  def move_session
     unless user_signed_in?
-      redirect_to root_path
+      redirect_to new_user_session_path
     end
   end
 
